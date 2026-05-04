@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Honorários Particulares — CPP</title>
+<meta name="description" content="Quanto você fatura por mês com a operação particular dos seus sonhos. Calculadora de honorários do cirurgião premium — Patrick Suyti + Dr. Mateus Jerônimo.">
+<link rel="icon" type="image/png" href="cpp-logo.png">
+<meta property="og:title" content="Calculadora de Honorários Particulares — CPP">
+<meta property="og:description" content="Quanto você fatura por mês com a operação particular dos seus sonhos.">
+<meta property="og:image" content="cpp-header-dupla.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;
+  --bg-2:#11111a;
+  --card:#15151f;
+  --card-2:#1a1a26;
+  --line:#2a2a38;
+  --line-2:#3a3a4a;
+  --gold:#c9a35a;
+  --gold-2:#e8c98a;
+  --gold-3:#f4dfb0;
+  --gold-soft:#8a6f3d;
+  --ink:#f5f1e8;
+  --ink-2:#cfc9bc;
+  --ink-3:#8a8579;
+  --good:#5eead4;
+  --warn:#fbbf24;
+  --danger:#ef6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+a{color:var(--gold-2);text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:transparent;color:inherit}
+input,select{font-family:inherit;outline:none}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1240px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:14px;font-family:'Cormorant Garamond',serif;font-size:18px}
+.brand-mark{width:42px;height:42px;filter:drop-shadow(0 2px 8px rgba(201,163,90,.25))}
+.brand-mark img{width:100%;height:100%;object-fit:contain}
+.brand-text{color:var(--ink);font-weight:500;line-height:1.1}
+.brand-text small{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2);margin-bottom:2px;font-family:'Inter',sans-serif}
+.brand-text b{color:var(--gold-2);font-weight:600}
+.top-actions{display:flex;gap:12px;align-items:center}
+.top-actions button{padding:8px 14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:6px;transition:all .2s}
+.top-actions button:hover{border-color:var(--gold-soft);color:var(--gold-2)}
+@media (max-width:780px){.top-actions .opt{display:none}}
+
+/* HERO */
+.hero{padding:72px 0 48px;text-align:center;position:relative}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(201,163,90,.12) 0%,transparent 70%);pointer-events:none}
+.hero-in{position:relative;z-index:1}
+.hero-logo{display:block;margin:0 auto 24px;width:100px;filter:drop-shadow(0 8px 32px rgba(201,163,90,.3))}
+.eyebrow{display:inline-block;padding:7px 18px;border:1px solid var(--gold-soft);border-radius:999px;color:var(--gold-2);font-size:11px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,68px);font-weight:500;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px}
+.hero h1 em{font-style:italic;color:var(--gold-2);font-weight:400}
+.hero .sub{font-size:clamp(16px,2vw,19px);color:var(--ink-2);max-width:680px;margin:0 auto;font-weight:300}
+
+/* SECTION */
+section{padding:32px 0}
+.s-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2);margin-bottom:12px}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,38px);font-weight:500;line-height:1.15;letter-spacing:-.01em;margin-bottom:14px}
+.s-title em{font-style:italic;color:var(--gold-2)}
+.s-lead{font-size:15px;color:var(--ink-2);max-width:760px}
+
+/* META BLOCK */
+.meta-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;margin-bottom:32px}
+.meta-row{display:grid;grid-template-columns:1.2fr 2fr;gap:32px;align-items:end}
+@media (max-width:780px){.meta-row{grid-template-columns:1fr;gap:20px}}
+.field-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-2);margin-bottom:8px;display:block}
+.field-input{display:flex;align-items:center;gap:8px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:14px 18px;transition:border-color .2s}
+.field-input:focus-within{border-color:var(--gold-soft)}
+.field-input .prefix{color:var(--gold-2);font-size:16px;font-weight:500}
+.field-input input{flex:1;background:transparent;border:0;color:var(--ink);font-size:22px;font-weight:500;font-family:'Cormorant Garamond',serif;letter-spacing:.01em}
+.field-input input::placeholder{color:var(--ink-3)}
+.field-hint{font-size:12px;color:var(--ink-3);margin-top:8px;font-style:italic}
+.templates{display:flex;flex-wrap:wrap;gap:8px}
+.tpl{padding:10px 16px;border:1px solid var(--line);border-radius:8px;color:var(--ink-2);font-size:12px;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;cursor:pointer}
+.tpl:hover{border-color:var(--gold-soft);color:var(--gold-2);background:rgba(201,163,90,.05)}
+.tpl.active{border-color:var(--gold);color:var(--gold-3);background:rgba(201,163,90,.12)}
+
+/* SCENARIO TABS */
+.scenarios{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.scen{padding:12px 22px;border:1px solid var(--line);border-radius:10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:500;transition:all .2s;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left}
+.scen small{font-size:10px;letter-spacing:.2em;color:var(--ink-3);font-weight:400}
+.scen:hover{border-color:var(--gold-soft);color:var(--gold-2)}
+.scen.active{border-color:var(--gold);color:var(--gold-3);background:linear-gradient(135deg,rgba(201,163,90,.12),rgba(201,163,90,.04))}
+.scen.active small{color:var(--gold-2)}
+
+/* DASHBOARD CARDS */
+.dash{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;margin-bottom:32px}
+@media (max-width:980px){.dash{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.dash{grid-template-columns:1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.kpi.primary{background:linear-gradient(135deg,rgba(201,163,90,.12) 0%,rgba(201,163,90,.04) 100%);border-color:var(--gold-soft)}
+.kpi.primary::before{content:"";position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle,rgba(201,163,90,.15) 0%,transparent 70%);pointer-events:none}
+.kpi-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-2);margin-bottom:10px;position:relative;z-index:1}
+.kpi-value{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:500;color:var(--ink);line-height:1;position:relative;z-index:1;letter-spacing:-.01em}
+.kpi.primary .kpi-value{font-size:56px;color:var(--gold-2);background:linear-gradient(135deg,var(--gold-3) 0%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.kpi-sub{font-size:13px;color:var(--ink-3);margin-top:8px;position:relative;z-index:1}
+
+/* GOAL BAR */
+.goal{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:32px}
+.goal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.goal-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:500}
+.goal-percent{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold-2);font-weight:500}
+.goal-percent.over{color:var(--good)}
+.goal-bar{width:100%;height:14px;background:var(--bg-2);border-radius:999px;overflow:hidden;position:relative;border:1px solid var(--line)}
+.goal-fill{height:100%;background:linear-gradient(90deg,var(--gold-soft) 0%,var(--gold) 50%,var(--gold-3) 100%);transition:width .5s ease;border-radius:999px;position:relative}
+.goal-fill.over{background:linear-gradient(90deg,var(--good) 0%,#3dd4b4 100%)}
+.goal-status{margin-top:14px;font-size:14px;color:var(--ink-2);line-height:1.5}
+.goal-status strong{color:var(--gold-2)}
+.goal-status.good strong{color:var(--good)}
+
+/* TABLE */
+.table-block{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.table-head-row{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.table-head-row h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--ink);font-weight:500}
+.table-head-row .count{font-size:12px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:780px}
+thead th{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-2);text-align:left;padding:14px 16px;background:var(--bg-2);border-bottom:1px solid var(--line);font-weight:500}
+thead th.right{text-align:right}
+tbody td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:hover{background:rgba(201,163,90,.025)}
+tbody tr:last-child td{border-bottom:0}
+.cell-input{width:100%;background:transparent;border:1px solid transparent;color:var(--ink);font-size:14px;padding:10px 12px;border-radius:6px;transition:all .15s}
+.cell-input:hover{border-color:var(--line-2)}
+.cell-input:focus{border-color:var(--gold-soft);background:var(--bg-2)}
+.cell-input.numeric{text-align:right;font-variant-numeric:tabular-nums;font-weight:500;font-family:'Inter',sans-serif}
+.cell-select{width:100%;background:transparent;border:1px solid transparent;color:var(--ink);font-size:13px;padding:10px 12px;border-radius:6px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23c9a35a' d='M5 6L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.cell-select:hover{border-color:var(--line-2)}
+.cell-select:focus{border-color:var(--gold-soft);background-color:var(--bg-2)}
+.cell-select option{background:var(--card);color:var(--ink)}
+.cell-receita{text-align:right;padding:10px 16px;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-2);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cell-action{text-align:center;width:48px}
+.btn-x{width:32px;height:32px;border-radius:50%;color:var(--ink-3);transition:all .2s;font-size:18px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.btn-x:hover{background:rgba(239,107,107,.1);color:var(--danger)}
+.col-tipo{width:170px}
+.col-valor{width:160px}
+.col-qtd{width:120px}
+.col-receita{width:170px}
+.empty{padding:48px 24px;text-align:center;color:var(--ink-3);font-style:italic}
+tfoot td{padding:18px 16px;background:var(--bg-2);border-top:2px solid var(--gold-soft)}
+.tfoot-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-2);font-weight:500}
+.tfoot-total{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold-3);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+
+/* TYPE BADGES */
+.tipo-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:500}
+.tipo-consulta{background:rgba(94,234,212,.12);color:var(--good);border:1px solid rgba(94,234,212,.3)}
+.tipo-cirurgia{background:rgba(201,163,90,.12);color:var(--gold-2);border:1px solid rgba(201,163,90,.3)}
+.tipo-retorno{background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
+.tipo-procedimento{background:rgba(251,191,36,.12);color:var(--warn);border:1px solid rgba(251,191,36,.3)}
+.tipo-outros{background:rgba(255,255,255,.05);color:var(--ink-2);border:1px solid var(--line-2)}
+
+/* ADD ROW BUTTON */
+.add-row{padding:18px 24px;border-top:1px solid var(--line);display:flex;justify-content:center;background:var(--bg-2)}
+.btn-add{padding:12px 24px;background:transparent;border:1px dashed var(--gold-soft);color:var(--gold-2);font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-radius:8px;transition:all .2s;font-weight:500}
+.btn-add:hover{background:rgba(201,163,90,.08);border-style:solid}
+
+/* DISTRIBUIÇÃO */
+.dist-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:24px}
+.dist-block h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:500;margin-bottom:18px}
+.dist-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.dist-row:last-child{margin-bottom:0}
+.dist-label{flex:0 0 130px;font-size:13px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em}
+.dist-bar-wrap{flex:1;min-width:200px;height:10px;background:var(--bg-2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.dist-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold-2));border-radius:999px;transition:width .5s ease}
+.dist-value{flex:0 0 auto;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-2);font-weight:500;font-variant-numeric:tabular-nums;min-width:140px;text-align:right}
+.dist-percent{flex:0 0 auto;font-size:11px;color:var(--ink-3);min-width:48px;text-align:right;letter-spacing:.05em}
+
+/* INSIGHT */
+.insight{background:linear-gradient(135deg,rgba(201,163,90,.06),transparent);border:1px solid var(--gold-soft);border-radius:14px;padding:24px;margin-bottom:24px;border-left:3px solid var(--gold)}
+.insight-label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2);margin-bottom:10px}
+.insight p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);line-height:1.5;font-weight:400}
+.insight p strong{color:var(--gold-3)}
+.insight p em{font-style:italic;color:var(--gold-2)}
+
+/* CTA */
+.cta-bottom{margin-top:64px;padding:64px 24px;text-align:center;background:linear-gradient(180deg,transparent 0%,rgba(201,163,90,.05) 50%,transparent 100%);border-top:1px solid var(--line)}
+.cta-bottom img{width:80px;margin:0 auto 24px;display:block;opacity:.9}
+.cta-bottom h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);color:var(--ink);font-weight:500;line-height:1.1;margin-bottom:16px;letter-spacing:-.01em}
+.cta-bottom h2 em{color:var(--gold-2);font-style:italic}
+.cta-bottom p{font-size:16px;color:var(--ink-2);max-width:580px;margin:0 auto 28px;font-weight:300}
+.btn-primary{display:inline-block;padding:16px 36px;background:linear-gradient(135deg,var(--gold-3) 0%,var(--gold) 50%,var(--gold-soft) 100%);color:#0a0a0f;font-weight:600;font-size:13px;letter-spacing:.15em;text-transform:uppercase;border-radius:8px;transition:transform .2s,box-shadow .2s;border:1px solid var(--gold-3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px -8px rgba(201,163,90,.5)}
+.btn-secondary{display:inline-block;padding:14px 28px;background:transparent;color:var(--gold-2);font-weight:500;font-size:12px;letter-spacing:.15em;text-transform:uppercase;border-radius:8px;border:1px solid var(--gold-soft);transition:all .2s;margin-left:8px}
+.btn-secondary:hover{background:rgba(201,163,90,.08);border-color:var(--gold)}
+
+/* FOOTER */
+footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
+.foot-logo{width:48px;margin:0 auto 16px;display:block;opacity:.7}
+.foot-brand{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-2);margin-bottom:6px;letter-spacing:.04em}
+.foot-meta{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+
+@media print{
+  .topbar,.cta-bottom,.btn-add,.btn-x,.add-row,footer{display:none}
+  body{background:white;color:#111}
+  .meta-block,.kpi,.goal,.table-block,.dist-block,.insight{background:white;border-color:#ccc;color:#111}
+  .kpi.primary{background:#faf6ec}
+  .kpi-value,.kpi.primary .kpi-value,.tfoot-total,.dist-value,.cell-receita,.goal-percent{color:#7a5a1f !important;-webkit-text-fill-color:#7a5a1f !important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-mark"><img src="cpp-logo.png" alt="CPP"></div>
+      <div class="brand-text">
+        <small>Mentoria</small>
+        Cirurgião Particular <b>Premium</b>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button onclick="window.print()" class="opt">Imprimir / PDF</button>
+      <button onclick="resetAll()">Limpar</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <img src="cpp-logo.png" alt="" class="hero-logo">
+    <span class="eyebrow">Calculadora de Honorários Particulares</span>
+    <h1>Quanto você fatura por mês<br>com a <em>operação particular</em> dos seus sonhos</h1>
+    <p class="sub">Coloque seus procedimentos, valores e quantidades. A calculadora gera a projeção mensal, anual e o gap até a meta. Sem fórmula travada — você é quem define o ticket.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- META + TEMPLATES -->
+  <div class="meta-block">
+    <div class="meta-row">
+      <div>
+        <label class="field-label">Meta de receita mensal</label>
+        <div class="field-input">
+          <span class="prefix">R$</span>
+          <input type="text" id="metaInput" inputmode="decimal" placeholder="50.000">
+        </div>
+        <div class="field-hint">Quanto você quer faturar por mês na operação particular</div>
+      </div>
+      <div>
+        <label class="field-label">Começar com um modelo (opcional)</label>
+        <div class="templates" id="templates">
+          <button class="tpl" data-tpl="ortopedia">Ortopedia (Quadril/Joelho)</button>
+          <button class="tpl" data-tpl="vascular">Vascular (Lipedema/Varizes)</button>
+          <button class="tpl" data-tpl="plastica">Plástica</button>
+          <button class="tpl" data-tpl="capilar">Transplante Capilar</button>
+          <button class="tpl" data-tpl="geral">Modelo Genérico</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIOS -->
+  <div class="s-eyebrow">Cenários</div>
+  <div class="scenarios">
+    <button class="scen" data-scen="conservador">Conservador<small>50% das quantidades</small></button>
+    <button class="scen active" data-scen="realista">Realista<small>Quantidades atuais</small></button>
+    <button class="scen" data-scen="arrojado">Arrojado<small>150% das quantidades</small></button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dash">
+    <div class="kpi primary">
+      <div class="kpi-label">Receita mensal projetada</div>
+      <div class="kpi-value" id="kpiMes">R$ 0</div>
+      <div class="kpi-sub" id="kpiMesSub">cenário realista</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Anual</div>
+      <div class="kpi-value" id="kpiAno">R$ 0</div>
+      <div class="kpi-sub">12 meses</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Ticket médio</div>
+      <div class="kpi-value" id="kpiTicket">R$ 0</div>
+      <div class="kpi-sub" id="kpiTicketSub">por procedimento</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Volume / mês</div>
+      <div class="kpi-value" id="kpiVol">0</div>
+      <div class="kpi-sub">procedimentos</div>
+    </div>
+  </div>
+
+  <!-- GOAL BAR -->
+  <div class="goal" id="goalBlock">
+    <div class="goal-head">
+      <div class="goal-title">Meta vs Projeção</div>
+      <div class="goal-percent" id="goalPct">0%</div>
+    </div>
+    <div class="goal-bar">
+      <div class="goal-fill" id="goalFill" style="width:0%"></div>
+    </div>
+    <div class="goal-status" id="goalStatus">Defina sua meta acima e adicione procedimentos pra ver o gap.</div>
+  </div>
+
+  <!-- TABELA -->
+  <div class="table-block">
+    <div class="table-head-row">
+      <h3>Seus procedimentos</h3>
+      <div class="count" id="rowCount">0 procedimentos</div>
+    </div>
+    <div class="table-scroll">
+      <table id="tabela">
+        <thead>
+          <tr>
+            <th>Procedimento</th>
+            <th class="col-tipo">Tipo</th>
+            <th class="col-valor right">Valor unitário</th>
+            <th class="col-qtd right">Qtd / mês</th>
+            <th class="col-receita right">Receita / mês</th>
+            <th class="col-action"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4"><span class="tfoot-label">Receita total mensal</span></td>
+            <td class="tfoot-total" id="tfootTotal">R$ 0</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="add-row">
+      <button class="btn-add" onclick="addRow()">+ Adicionar procedimento</button>
+    </div>
+  </div>
+
+  <!-- DISTRIBUIÇÃO -->
+  <div class="dist-block" id="distBlock" style="display:none">
+    <h3>Distribuição da receita por tipo</h3>
+    <div id="distList"></div>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="insight" id="insightBlock" style="display:none">
+    <div class="insight-label">Análise da sua operação</div>
+    <p id="insightText"></p>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<section class="cta-bottom">
+  <img src="cpp-logo.png" alt="">
+  <h2>O número assustou — ou <em>te chamou</em>?</h2>
+  <p>Se você quer um caminho passo a passo pra sair do convênio e construir uma operação particular previsível, leia o Plano de Independência Particular ou conversa direto com a gente.</p>
+  <a href="https://pofazze.github.io/plano-independencia-particular/" class="btn-primary" target="_blank">Plano de 30 dias</a>
+  <a href="https://wa.me/5583993527775?text=Quero%20saber%20mais%20sobre%20a%20Mentoria%20CPP" class="btn-secondary">Falar com a CPP</a>
+</section>
+
+<footer>
+  <img src="cpp-logo.png" alt="" class="foot-logo">
+  <div class="foot-brand">Cirurgião Particular Premium</div>
+  <div class="foot-meta">Patrick Suyti · Dr. Mateus Jerônimo · Maio 2026</div>
+</footer>
+
+<script>
+const STATE_KEY = 'cpp_calc_v1';
+
+const TIPOS = {
+  consulta: 'Consulta',
+  cirurgia: 'Cirurgia',
+  procedimento: 'Procedimento',
+  retorno: 'Retorno',
+  outros: 'Outros'
+};
+
+const CENARIOS = {
+  conservador: 0.5,
+  realista: 1.0,
+  arrojado: 1.5
+};
+
+const TEMPLATES = {
+  ortopedia: [
+    {nome:'Consulta inicial', tipo:'consulta', valor:800, qtd:30},
+    {nome:'Consulta retorno', tipo:'retorno', valor:0, qtd:25},
+    {nome:'Cirurgia de quadril (unilateral)', tipo:'cirurgia', valor:35000, qtd:3},
+    {nome:'Cirurgia de joelho (unilateral)', tipo:'cirurgia', valor:28000, qtd:2},
+    {nome:'Artroscopia', tipo:'cirurgia', valor:12000, qtd:2},
+    {nome:'Infiltração / Bloqueio', tipo:'procedimento', valor:1500, qtd:8}
+  ],
+  vascular: [
+    {nome:'Consulta inicial', tipo:'consulta', valor:700, qtd:25},
+    {nome:'Consulta retorno', tipo:'retorno', valor:0, qtd:20},
+    {nome:'Lipedema bilateral (pacote)', tipo:'cirurgia', valor:28000, qtd:3},
+    {nome:'Tratamento de varizes (pacote)', tipo:'cirurgia', valor:6000, qtd:6},
+    {nome:'Escleroterapia', tipo:'procedimento', valor:1800, qtd:10},
+    {nome:'Eco-doppler', tipo:'procedimento', valor:600, qtd:15}
+  ],
+  plastica: [
+    {nome:'Consulta avaliação', tipo:'consulta', valor:800, qtd:25},
+    {nome:'Lipoaspiração HD', tipo:'cirurgia', valor:22000, qtd:4},
+    {nome:'Mama (próteses)', tipo:'cirurgia', valor:25000, qtd:3},
+    {nome:'Abdominoplastia', tipo:'cirurgia', valor:18000, qtd:2},
+    {nome:'Rinoplastia', tipo:'cirurgia', valor:18000, qtd:2},
+    {nome:'Toxina botulínica', tipo:'procedimento', valor:1800, qtd:15}
+  ],
+  capilar: [
+    {nome:'Consulta avaliação', tipo:'consulta', valor:600, qtd:20},
+    {nome:'Transplante capilar (alta densidade)', tipo:'cirurgia', valor:22000, qtd:6},
+    {nome:'Transplante capilar (área menor)', tipo:'cirurgia', valor:14000, qtd:4},
+    {nome:'Mesoterapia capilar', tipo:'procedimento', valor:1200, qtd:12},
+    {nome:'Retorno acompanhamento', tipo:'retorno', valor:0, qtd:30}
+  ],
+  geral: [
+    {nome:'Consulta', tipo:'consulta', valor:600, qtd:30},
+    {nome:'Procedimento ambulatorial', tipo:'procedimento', valor:5000, qtd:8},
+    {nome:'Cirurgia média', tipo:'cirurgia', valor:15000, qtd:3},
+    {nome:'Cirurgia grande', tipo:'cirurgia', valor:30000, qtd:2}
+  ]
+};
+
+let state = {
+  meta: 50000,
+  procs: [],
+  cenario: 'realista',
+  tpl: null
+};
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function parseBR(str) {
+  if (typeof str === 'number') return str;
+  if (!str) return 0;
+  const cleaned = String(str).replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.');
+  return parseFloat(cleaned) || 0;
+}
+
+function formatBRL(n) {
+  return n.toLocaleString('pt-BR', {style:'currency', currency:'BRL', minimumFractionDigits:0, maximumFractionDigits:0});
+}
+function formatBRLfull(n) {
+  return n.toLocaleString('pt-BR', {style:'currency', currency:'BRL', minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function formatNum(n) {
+  return n.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function save() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e){}
+}
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if (raw) state = Object.assign(state, JSON.parse(raw));
+  } catch(e){}
+}
+
+function addRow(data) {
+  state.procs.push({
+    id: uid(),
+    nome: data?.nome || '',
+    tipo: data?.tipo || 'consulta',
+    valor: data?.valor || 0,
+    qtd: data?.qtd || 0
+  });
+  save();
+  render();
+}
+
+function removeRow(id) {
+  state.procs = state.procs.filter(p => p.id !== id);
+  save();
+  render();
+}
+
+function updateField(id, field, value) {
+  const p = state.procs.find(x => x.id === id);
+  if (!p) return;
+  if (field === 'nome' || field === 'tipo') {
+    p[field] = value;
+  } else {
+    p[field] = parseBR(value);
+  }
+  save();
+  render();
+}
+
+function applyTemplate(tpl) {
+  const has = state.procs.some(p => p.nome || p.valor || p.qtd);
+  if (has && !confirm('Isso vai substituir os procedimentos atuais. Continuar?')) return;
+  state.procs = TEMPLATES[tpl].map(t => ({id: uid(), ...t}));
+  state.tpl = tpl;
+  save();
+  render();
+}
+
+function applyScenario(c) {
+  state.cenario = c;
+  save();
+  render();
+}
+
+function resetAll() {
+  if (!confirm('Limpar TODOS os procedimentos e meta?')) return;
+  state = { meta: 50000, procs: [], cenario: 'realista', tpl: null };
+  save();
+  render();
+  document.getElementById('metaInput').value = formatNum(state.meta);
+}
+
+function calc() {
+  const mult = CENARIOS[state.cenario];
+  const procs = state.procs.map(p => {
+    const qtdAj = Math.round(p.qtd * mult);
+    const receita = (p.valor || 0) * qtdAj;
+    return { ...p, qtdAj, receita };
+  });
+  const totalMes = procs.reduce((s,p) => s + p.receita, 0);
+  const totalQtd = procs.reduce((s,p) => s + p.qtdAj, 0);
+  const totalQtdPaga = procs.filter(p => p.valor > 0).reduce((s,p) => s + p.qtdAj, 0);
+  const ticket = totalQtdPaga > 0 ? totalMes / totalQtdPaga : 0;
+  const totalAno = totalMes * 12;
+
+  const porTipo = {};
+  procs.forEach(p => {
+    porTipo[p.tipo] = (porTipo[p.tipo] || 0) + p.receita;
+  });
+
+  const meta = state.meta || 0;
+  const gapPct = meta > 0 ? (totalMes / meta) * 100 : 0;
+  const gap = meta - totalMes;
+
+  return { procs, totalMes, totalAno, totalQtd, ticket, porTipo, meta, gap, gapPct };
+}
+
+function makeRow(p) {
+  const tr = document.createElement('tr');
+  tr.dataset.id = p.id;
+  tr.innerHTML = `
+    <td><input class="cell-input" placeholder="Ex.: Consulta inicial" value="${escapeHtml(p.nome)}" data-f="nome"></td>
+    <td>
+      <select class="cell-select" data-f="tipo">
+        ${Object.entries(TIPOS).map(([k,v]) => `<option value="${k}" ${p.tipo===k?'selected':''}>${v}</option>`).join('')}
+      </select>
+    </td>
+    <td><input class="cell-input numeric" inputmode="decimal" placeholder="0" value="${p.valor || ''}" data-f="valor"></td>
+    <td><input class="cell-input numeric" inputmode="numeric" placeholder="0" value="${p.qtd || ''}" data-f="qtd"></td>
+    <td class="cell-receita" data-receita></td>
+    <td class="cell-action"><button class="btn-x" title="Remover" data-action="remove">×</button></td>
+  `;
+  tr.querySelectorAll('[data-f]').forEach(el => {
+    el.addEventListener('input', e => updateField(p.id, el.dataset.f, e.target.value));
+    el.addEventListener('change', e => updateField(p.id, el.dataset.f, e.target.value));
+  });
+  tr.querySelector('[data-action="remove"]').addEventListener('click', () => removeRow(p.id));
+  return tr;
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function render() {
+  const r = calc();
+
+  // Tabela
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  if (state.procs.length === 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td colspan="6" class="empty">Adicione seus procedimentos abaixo ou escolha um modelo de especialidade acima.</td>`;
+    tbody.appendChild(tr);
+  } else {
+    state.procs.forEach((p,i) => {
+      const tr = makeRow(p);
+      const rec = r.procs[i].receita;
+      tr.querySelector('[data-receita]').textContent = formatBRL(rec);
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Counts
+  document.getElementById('rowCount').textContent =
+    state.procs.length === 0 ? '0 procedimentos' :
+    state.procs.length === 1 ? '1 procedimento' :
+    `${state.procs.length} procedimentos`;
+
+  // KPIs
+  document.getElementById('kpiMes').textContent = formatBRL(r.totalMes);
+  document.getElementById('kpiMesSub').textContent = `cenário ${state.cenario}`;
+  document.getElementById('kpiAno').textContent = formatBRL(r.totalAno);
+  document.getElementById('kpiTicket').textContent = formatBRL(r.ticket);
+  document.getElementById('kpiTicketSub').textContent = r.ticket > 0 ? 'por procedimento pago' : 'adicione procedimentos';
+  document.getElementById('kpiVol').textContent = formatNum(r.totalQtd);
+  document.getElementById('tfootTotal').textContent = formatBRL(r.totalMes);
+
+  // Goal bar
+  const fill = document.getElementById('goalFill');
+  const pctEl = document.getElementById('goalPct');
+  const status = document.getElementById('goalStatus');
+  const pctClamped = Math.min(r.gapPct, 100);
+  fill.style.width = pctClamped + '%';
+  pctEl.textContent = Math.round(r.gapPct) + '%';
+  fill.classList.toggle('over', r.gapPct >= 100);
+  pctEl.classList.toggle('over', r.gapPct >= 100);
+  status.classList.toggle('good', r.gapPct >= 100);
+
+  if (r.meta === 0 || r.totalMes === 0) {
+    status.innerHTML = 'Defina sua meta acima e adicione procedimentos pra ver o gap.';
+  } else if (r.gap > 0) {
+    const ticketAtual = r.ticket || 1;
+    const procsExtra = Math.ceil(r.gap / ticketAtual);
+    const aumentoTicket = Math.ceil((r.gap / r.totalMes) * 100);
+    status.innerHTML = `Falta <strong>${formatBRL(r.gap)}/mês</strong> pra bater a meta. Você pode adicionar <strong>${procsExtra} procedimentos</strong> com ticket atual, ou aumentar o ticket médio em <strong>${aumentoTicket}%</strong>.`;
+  } else {
+    const acima = Math.abs(r.gap);
+    status.innerHTML = `Você bateu a meta com folga de <strong>${formatBRL(acima)}/mês</strong>. Próximo passo: recalibrar o ticket pra cima — sua entrega já vale mais.`;
+  }
+
+  // Scenarios
+  document.querySelectorAll('.scen').forEach(b => b.classList.toggle('active', b.dataset.scen === state.cenario));
+  document.querySelectorAll('.tpl').forEach(b => b.classList.toggle('active', b.dataset.tpl === state.tpl));
+
+  // Distribuição
+  const dist = document.getElementById('distBlock');
+  const distList = document.getElementById('distList');
+  if (r.totalMes > 0) {
+    dist.style.display = '';
+    distList.innerHTML = '';
+    const sorted = Object.entries(r.porTipo).filter(([,v]) => v > 0).sort((a,b) => b[1] - a[1]);
+    sorted.forEach(([tipo, val]) => {
+      const pct = (val / r.totalMes) * 100;
+      const row = document.createElement('div');
+      row.className = 'dist-row';
+      row.innerHTML = `
+        <div class="dist-label">${TIPOS[tipo] || tipo}</div>
+        <div class="dist-bar-wrap"><div class="dist-bar-fill" style="width:${pct}%"></div></div>
+        <div class="dist-value">${formatBRL(val)}</div>
+        <div class="dist-percent">${pct.toFixed(0)}%</div>
+      `;
+      distList.appendChild(row);
+    });
+  } else {
+    dist.style.display = 'none';
+  }
+
+  // Insight
+  const insight = document.getElementById('insightBlock');
+  const insightText = document.getElementById('insightText');
+  if (r.totalMes > 0) {
+    insight.style.display = '';
+    let msg = '';
+    const cirurgiaPct = ((r.porTipo.cirurgia || 0) / r.totalMes) * 100;
+    const consultaPct = ((r.porTipo.consulta || 0) / r.totalMes) * 100;
+
+    if (cirurgiaPct > 80) {
+      msg = `<strong>${cirurgiaPct.toFixed(0)}% da sua receita vem de cirurgias.</strong> Operação concentrada — bom ticket, mas <em>frágil em mês de baixa</em>. Pense em construir 1-2 procedimentos ambulatoriais recorrentes pra estabilizar fluxo.`;
+    } else if (consultaPct > 50) {
+      msg = `<strong>${consultaPct.toFixed(0)}% vem de consultas.</strong> Volume alto, ticket diluído. <em>Próximo passo:</em> aumentar conversão consulta → cirurgia (dia 22 do plano: roteiro de fechamento).`;
+    } else if (r.totalQtd > 100) {
+      msg = `Você está projetando <strong>${formatNum(r.totalQtd)} procedimentos/mês</strong>. Volume alto pode comprometer percepção premium. <em>Pense:</em> menos procedimentos com ticket maior = mais margem e menos esgotamento.`;
+    } else if (r.ticket > 20000) {
+      msg = `Ticket médio de <strong>${formatBRL(r.ticket)}</strong>. Você está no jogo premium. <em>Foco agora:</em> previsibilidade — KPIs semanais (dia 25 do plano) e reserva financeira (dia 28).`;
+    } else if (r.gapPct >= 100) {
+      msg = `Sua projeção <strong>supera a meta</strong>. Hora de revisar: o ticket está honesto pra entrega? Tipicamente, no dia 14 do plano, o ticket sobe 20-40%. <em>Refaz a conta com 30% a mais.</em>`;
+    } else {
+      msg = `Operação balanceada. <em>Próxima alavanca:</em> aumentar o ticket dos cirúrgicos (não mais volume) — é onde a margem mora.`;
+    }
+    insightText.innerHTML = msg;
+  } else {
+    insight.style.display = 'none';
+  }
+}
+
+// Inputs do meta
+document.getElementById('metaInput').addEventListener('input', e => {
+  state.meta = parseBR(e.target.value);
+  save();
+  render();
+});
+
+// Templates
+document.querySelectorAll('.tpl').forEach(b => {
+  b.addEventListener('click', () => applyTemplate(b.dataset.tpl));
+});
+
+// Cenários
+document.querySelectorAll('.scen').forEach(b => {
+  b.addEventListener('click', () => applyScenario(b.dataset.scen));
+});
+
+// Init
+load();
+document.getElementById('metaInput').value = state.meta ? formatNum(state.meta) : '';
+if (state.procs.length === 0) addRow();
+else render();
+</script>
+</body>
+</html>
