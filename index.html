@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador CPP — Quanto você ganharia como Cirurgião Particular Premium</title>
-<meta name="description" content="Simule a sua receita como Cirurgião Particular Premium. Consultas, procedimentos, cirurgias — e a diferença em 5 anos.">
+<meta name="description" content="Simule a sua receita como Cirurgião Particular Premium. Você preenche todos os valores. Sem suposição.">
 <link rel="icon" type="image/png" href="cpp-logo.png">
 <meta property="og:title" content="Simulador CPP — Quanto você ganharia como Cirurgião Particular Premium">
-<meta property="og:description" content="Simule sua receita CPP em 3 blocos: consultas, procedimentos, cirurgias. Veja a diferença em 5 anos.">
+<meta property="og:description" content="Simule sua receita CPP em 3 blocos: consultas, procedimentos, cirurgias. Você preenche os valores.">
 <meta property="og:image" content="cpp-header-dupla.png">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,13 +63,8 @@ input,select{font-family:inherit;outline:none}
 .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5.5vw,64px);font-weight:500;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px}
 .hero h1 em{font-style:italic;color:var(--gold-2);font-weight:400}
 .hero .sub{font-size:clamp(15px,1.8vw,18px);color:var(--ink-2);max-width:720px;margin:0 auto;font-weight:300}
-
-/* STEPS NAV */
-.steps{display:flex;gap:0;margin:32px auto 0;max-width:780px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
-.step{flex:1;padding:14px 12px;text-align:center;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);border-right:1px solid var(--line);position:relative}
-.step:last-child{border-right:0}
-.step b{display:block;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold-2);font-weight:500;margin-bottom:2px;letter-spacing:.04em}
-@media (max-width:640px){.step{font-size:10px}}
+.hero-note{margin-top:28px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px;background:rgba(201,163,90,.06);border:1px solid var(--gold-soft);border-radius:999px;font-size:12px;color:var(--gold-2);letter-spacing:.05em}
+.hero-note b{color:var(--gold-3);font-weight:600}
 
 /* SECTION */
 section{padding:32px 0}
@@ -80,31 +75,26 @@ section{padding:32px 0}
 
 /* HOJE BLOCK */
 .hoje-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px;margin-bottom:32px;border-left:3px solid var(--hoje)}
-.hoje-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:24px}
+.hoje-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
 @media (max-width:780px){.hoje-row{grid-template-columns:1fr}}
 .field{display:flex;flex-direction:column}
 .field-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-2);margin-bottom:10px;display:block}
 .field-input{display:flex;align-items:center;gap:8px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:14px 18px;transition:border-color .2s}
 .field-input:focus-within{border-color:var(--gold-soft)}
-.field-input .prefix,.field-input .suffix{color:var(--gold-2);font-size:14px;font-weight:500}
+.field-input .prefix,.field-input .suffix{color:var(--gold-2);font-size:14px;font-weight:500;white-space:nowrap}
 .field-input input{flex:1;background:transparent;border:0;color:var(--ink);font-size:20px;font-weight:500;font-family:'Cormorant Garamond',serif;letter-spacing:.01em;width:100%;min-width:0}
 .field-input input::placeholder{color:var(--ink-3)}
-.field-hint{font-size:12px;color:var(--ink-3);margin-top:8px;font-style:italic;line-height:1.4}
+.field-hint{font-size:12px;color:var(--ink-3);margin-top:8px;line-height:1.4}
 
-/* TEMPLATES */
-.tpl-block{margin-bottom:28px}
-.tpl-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+/* TEMPLATES (só estrutura, sem valores) */
+.tpl-block{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:24px 28px;margin-bottom:32px}
+.tpl-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+.tpl-head h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);font-weight:500}
+.tpl-head p{font-size:13px;color:var(--ink-3);margin-top:2px;font-style:italic}
+.tpl-list{display:flex;flex-wrap:wrap;gap:8px}
 .tpl{padding:10px 16px;border:1px solid var(--line);border-radius:8px;color:var(--ink-2);font-size:12px;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;cursor:pointer}
 .tpl:hover{border-color:var(--gold-soft);color:var(--gold-2);background:rgba(201,163,90,.05)}
 .tpl.active{border-color:var(--gold);color:var(--gold-3);background:rgba(201,163,90,.12)}
-
-/* SCENARIOS */
-.scenarios{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
-.scen{padding:12px 22px;border:1px solid var(--line);border-radius:10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:500;transition:all .2s;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left}
-.scen small{font-size:10px;letter-spacing:.2em;color:var(--ink-3);font-weight:400}
-.scen:hover{border-color:var(--gold-soft);color:var(--gold-2)}
-.scen.active{border-color:var(--gold);color:var(--gold-3);background:linear-gradient(135deg,rgba(201,163,90,.12),rgba(201,163,90,.04))}
-.scen.active small{color:var(--gold-2)}
 
 /* CPP CARDS — 3 blocos */
 .cpp-blocks{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:32px}
@@ -192,20 +182,12 @@ section{padding:32px 0}
 .dist-row:last-child{margin-bottom:0}
 .dist-label{flex:0 0 150px;font-size:13px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em}
 .dist-bar-wrap{flex:1;min-width:200px;height:10px;background:var(--bg-2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
-.dist-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold-2));border-radius:999px;transition:width .5s ease}
+.dist-bar-fill{height:100%;border-radius:999px;transition:width .5s ease}
 .dist-bar-fill.consultas{background:linear-gradient(90deg,#3dd4b4,var(--good))}
 .dist-bar-fill.procedimentos{background:linear-gradient(90deg,#a78bfa,#c4b5fd)}
 .dist-bar-fill.cirurgias{background:linear-gradient(90deg,var(--gold-soft),var(--gold-2))}
 .dist-value{flex:0 0 auto;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-2);font-weight:500;font-variant-numeric:tabular-nums;min-width:140px;text-align:right}
 .dist-percent{flex:0 0 auto;font-size:11px;color:var(--ink-3);min-width:48px;text-align:right;letter-spacing:.05em}
-
-/* INSIGHT */
-.insight{background:linear-gradient(135deg,rgba(201,163,90,.06),transparent);border:1px solid var(--gold-soft);border-radius:14px;padding:32px;margin-bottom:24px;border-left:3px solid var(--gold)}
-.insight-label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
-.insight p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);line-height:1.5;font-weight:400;margin-bottom:14px}
-.insight p:last-child{margin-bottom:0}
-.insight p strong{color:var(--gold-3)}
-.insight p em{font-style:italic;color:var(--gold-2)}
 
 /* PROJEÇÃO 5 ANOS */
 .projecao{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px;margin-bottom:24px}
@@ -239,9 +221,9 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
 .foot-meta{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
 
 @media print{
-  .topbar,.cta-bottom,.btn-add,.btn-x,footer,.tpl-block,.scenarios,.steps{display:none}
+  .topbar,.cta-bottom,.btn-add,.btn-x,footer,.tpl-block{display:none}
   body{background:white;color:#111}
-  .hoje-block,.cpp-block,.kpi,.compare,.dist-block,.insight,.projecao{background:white;border-color:#ccc;color:#111}
+  .hoje-block,.cpp-block,.kpi,.compare,.dist-block,.projecao{background:white;border-color:#ccc;color:#111}
   .kpi.primary,.compare-side.cpp,.proj-cell.highlight{background:#faf6ec}
   .kpi-value,.kpi.primary .kpi-value,.compare-side.cpp .val,.cell-receita,.cpp-block-receita,.dist-value{color:#7a5a1f !important;-webkit-text-fill-color:#7a5a1f !important}
 }
@@ -271,14 +253,8 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
     <img src="cpp-logo.png" alt="" class="hero-logo">
     <span class="eyebrow">Simulador de Receita CPP</span>
     <h1>Quanto você ganharia<br>como <em>Cirurgião Particular Premium</em></h1>
-    <p class="sub">Simule sua receita em 3 blocos — consultas, procedimentos e cirurgias. Compare com sua situação atual. Veja a diferença em 1, 3 e 5 anos. Não taxamos preço — você define o ticket.</p>
-    <div class="steps">
-      <div class="step"><b>1</b>Sua situação hoje</div>
-      <div class="step"><b>2</b>Consultas CPP</div>
-      <div class="step"><b>3</b>Procedimentos</div>
-      <div class="step"><b>4</b>Cirurgias</div>
-      <div class="step"><b>5</b>Resultado</div>
-    </div>
+    <p class="sub">Simule sua receita em 3 blocos — consultas, procedimentos e cirurgias. Compare com sua situação atual. Veja a diferença em 1, 3 e 5 anos.</p>
+    <div class="hero-note"><b>Você preenche todos os valores.</b> &nbsp;Nenhum número é sugerido pelo simulador.</div>
   </div>
 </section>
 
@@ -295,49 +271,36 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
         <label class="field-label">Faturamento atual / mês</label>
         <div class="field-input">
           <span class="prefix">R$</span>
-          <input type="text" id="hojeFaturamento" inputmode="decimal" placeholder="40.000">
+          <input type="text" id="hojeFaturamento" inputmode="decimal" placeholder="0">
         </div>
-        <div class="field-hint">Quanto entra hoje, somando convênio + particular + SUS</div>
+        <div class="field-hint">Soma de tudo que entra hoje (convênio + particular + SUS + plantões).</div>
       </div>
       <div class="field">
         <label class="field-label">Horas trabalhadas / semana</label>
         <div class="field-input">
-          <input type="text" id="hojeHoras" inputmode="numeric" placeholder="60">
-          <span class="suffix">h</span>
+          <input type="text" id="hojeHoras" inputmode="numeric" placeholder="0">
+          <span class="suffix">h / sem</span>
         </div>
-        <div class="field-hint">Inclui plantões, consultório, cirurgias, deslocamento</div>
-      </div>
-      <div class="field">
-        <label class="field-label">% do faturamento que vem de convênio/SUS</label>
-        <div class="field-input">
-          <input type="text" id="hojePctConv" inputmode="numeric" placeholder="70">
-          <span class="suffix">%</span>
-        </div>
-        <div class="field-hint">O resto é particular. Estimativa serve.</div>
+        <div class="field-hint">Inclui plantões, consultório, cirurgias, deslocamento, administração.</div>
       </div>
     </div>
   </div>
 
   <!-- TEMPLATES -->
   <div class="tpl-block">
-    <div class="s-eyebrow">Atalho · começar com modelo</div>
-    <h2 class="s-title">Ou puxa um modelo da sua <em>especialidade</em></h2>
-    <p class="s-lead">Modelos são editáveis — coloque os valores REAIS que você cobraria como CPP. Não taxamos nada.</p>
+    <div class="tpl-head">
+      <div>
+        <h3>Atalho · estrutura por especialidade</h3>
+        <p>Adiciona apenas a lista de itens (sem valores). Você preenche valor e quantidade.</p>
+      </div>
+    </div>
     <div class="tpl-list">
-      <button class="tpl" data-tpl="ortopedia">Ortopedia (Quadril/Joelho)</button>
-      <button class="tpl" data-tpl="vascular">Vascular (Lipedema/Varizes)</button>
+      <button class="tpl" data-tpl="ortopedia">Ortopedia</button>
+      <button class="tpl" data-tpl="vascular">Vascular</button>
       <button class="tpl" data-tpl="plastica">Plástica</button>
       <button class="tpl" data-tpl="capilar">Transplante Capilar</button>
-      <button class="tpl" data-tpl="geral">Modelo Genérico</button>
+      <button class="tpl" data-tpl="geral">Estrutura Genérica</button>
     </div>
-  </div>
-
-  <!-- SCENARIOS -->
-  <div class="s-eyebrow">Cenários de produtividade</div>
-  <div class="scenarios">
-    <button class="scen" data-scen="conservador">Conservador<small>50% das quantidades</small></button>
-    <button class="scen active" data-scen="realista">Realista<small>Quantidades atuais</small></button>
-    <button class="scen" data-scen="arrojado">Arrojado<small>150% das quantidades</small></button>
   </div>
 
   <!-- 3 BLOCOS CPP -->
@@ -361,23 +324,23 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
             <label class="field-label">Valor da consulta</label>
             <div class="field-input">
               <span class="prefix">R$</span>
-              <input type="text" id="consValor" inputmode="decimal" placeholder="800">
+              <input type="text" id="consValor" inputmode="decimal" placeholder="0">
             </div>
-            <div class="field-hint">Premium tipicamente cobra 5-10× o convênio</div>
+            <div class="field-hint">Quanto você cobraria por consulta como CPP.</div>
           </div>
           <div class="field">
             <label class="field-label">Consultas / dia</label>
             <div class="field-input">
-              <input type="text" id="consDia" inputmode="numeric" placeholder="6">
+              <input type="text" id="consDia" inputmode="numeric" placeholder="0">
             </div>
-            <div class="field-hint">Premium = menos pacientes, mais tempo. 5-8 é o ideal.</div>
+            <div class="field-hint">Quantas consultas você atenderia por dia no consultório.</div>
           </div>
           <div class="field">
-            <label class="field-label">Dias úteis / mês no consultório</label>
+            <label class="field-label">Dias no consultório / mês</label>
             <div class="field-input">
-              <input type="text" id="consDiasMes" inputmode="numeric" placeholder="20">
+              <input type="text" id="consDiasMes" inputmode="numeric" placeholder="0">
             </div>
-            <div class="field-hint">Se atende 3×/sem = ~12. 4×/sem = ~16. 5×/sem = ~20.</div>
+            <div class="field-hint">Em quantos dias do mês você atende no consultório.</div>
           </div>
         </div>
         <div class="calc-line" id="consCalc">Preencha os campos acima — a receita aparece aqui.</div>
@@ -451,23 +414,23 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
   <!-- DASHBOARD CPP -->
   <div class="s-eyebrow">Etapa 5 · Resultado</div>
   <h2 class="s-title">Sua <em>receita</em> como CPP</h2>
-  <p class="s-lead">A soma dos 3 blocos no cenário escolhido — antes de comparar com sua realidade atual.</p>
+  <p class="s-lead">Soma exata dos 3 blocos com os valores e quantidades que você preencheu. Sem multiplicador, sem cenário, sem ajuste.</p>
 
   <div class="dash">
     <div class="kpi primary">
       <div class="kpi-label">Receita CPP / mês</div>
       <div class="kpi-value" id="kpiMes">R$ 0</div>
-      <div class="kpi-sub" id="kpiMesSub">cenário realista</div>
+      <div class="kpi-sub" id="kpiMesSub">soma dos 3 blocos</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Receita / ano</div>
       <div class="kpi-value" id="kpiAno">R$ 0</div>
-      <div class="kpi-sub">12 meses</div>
+      <div class="kpi-sub">mensal × 12</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Ticket médio</div>
       <div class="kpi-value" id="kpiTicket">R$ 0</div>
-      <div class="kpi-sub" id="kpiTicketSub">por atendimento</div>
+      <div class="kpi-sub" id="kpiTicketSub">total ÷ atendimentos</div>
     </div>
   </div>
 
@@ -500,17 +463,17 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
       <div class="delta">
         <div class="delta-label">Diferença / mês</div>
         <div class="delta-val" id="deltaMes">R$ 0</div>
-        <div class="delta-sub" id="deltaMesSub">a mais por mês</div>
+        <div class="delta-sub" id="deltaMesSub">CPP − hoje</div>
       </div>
       <div class="delta">
         <div class="delta-label">Diferença / ano</div>
         <div class="delta-val" id="deltaAno">R$ 0</div>
-        <div class="delta-sub">12 meses</div>
+        <div class="delta-sub">diferença mensal × 12</div>
       </div>
       <div class="delta">
-        <div class="delta-label">R$ por hora</div>
+        <div class="delta-label">R$ por hora hoje</div>
         <div class="delta-val" id="deltaHora">R$ 0</div>
-        <div class="delta-sub" id="deltaHoraSub">vs hoje</div>
+        <div class="delta-sub" id="deltaHoraSub">faturamento ÷ horas mensais</div>
       </div>
     </div>
   </div>
@@ -518,14 +481,8 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
   <!-- PROJEÇÃO 5 ANOS -->
   <div class="projecao" id="projBlock" style="display:none">
     <h3>Projeção em 5 anos</h3>
-    <p>Receita acumulada da operação CPP — sem reajuste, sem expansão.</p>
+    <p>Receita acumulada da operação CPP — sem reajuste, sem expansão. Apenas mensal × 12 × ano.</p>
     <div class="proj-grid" id="projGrid"></div>
-  </div>
-
-  <!-- INSIGHT -->
-  <div class="insight" id="insightBlock" style="display:none">
-    <div class="insight-label">Análise consultiva da sua operação</div>
-    <div id="insightText"></div>
   </div>
 
 </div>
@@ -534,7 +491,7 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
 <section class="cta-bottom">
   <img src="cpp-logo.png" alt="">
   <h2>O número assustou — ou <em>te chamou</em>?</h2>
-  <p>Se você quer um caminho passo a passo pra sair do convênio e construir essa operação previsível, tem o Plano de Independência Particular (gratuito) e a Mentoria CPP (com Patrick + Dr. Mateus, 6 meses).</p>
+  <p>Se você quer um caminho passo a passo pra sair do convênio e construir essa operação, tem o Plano de Independência Particular (gratuito) e a Mentoria CPP (com Patrick + Dr. Mateus, 6 meses).</p>
   <a href="https://pofazze.github.io/plano-independencia-particular/" class="btn-primary" target="_blank">Plano de 30 dias</a>
   <a href="https://wa.me/5583993527775?text=Quero%20saber%20mais%20sobre%20a%20Mentoria%20CPP" class="btn-secondary">Falar com a CPP</a>
 </section>
@@ -546,80 +503,37 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
 </footer>
 
 <script>
-const STATE_KEY = 'cpp_simulador_v2';
+const STATE_KEY = 'cpp_simulador_v3';
 
-const CENARIOS = { conservador: 0.5, realista: 1.0, arrojado: 1.5 };
-
+// Templates SEM valores — apenas estrutura/nomes pra estruturar
 const TEMPLATES = {
   ortopedia: {
-    consultas: { valor: 800, dia: 8, diasMes: 20 },
-    procs: [
-      {nome:'Infiltração', valor:1500, qtd:8},
-      {nome:'Bloqueio anestésico', valor:2000, qtd:4},
-      {nome:'Aplicação de ácido hialurônico', valor:2500, qtd:6}
-    ],
-    cirs: [
-      {nome:'Quadril unilateral (pacote)', valor:35000, qtd:3},
-      {nome:'Joelho unilateral (pacote)', valor:28000, qtd:2},
-      {nome:'Artroscopia', valor:12000, qtd:2}
-    ]
+    procs: ['Infiltração', 'Bloqueio anestésico', 'Aplicação de ácido hialurônico'],
+    cirs: ['Quadril unilateral (pacote)', 'Joelho unilateral (pacote)', 'Artroscopia']
   },
   vascular: {
-    consultas: { valor: 700, dia: 8, diasMes: 20 },
-    procs: [
-      {nome:'Escleroterapia', valor:1800, qtd:10},
-      {nome:'Eco-doppler', valor:600, qtd:15},
-      {nome:'Microcirurgia ambulatorial', valor:3500, qtd:4}
-    ],
-    cirs: [
-      {nome:'Lipedema bilateral (pacote)', valor:28000, qtd:3},
-      {nome:'Tratamento de varizes (pacote)', valor:6000, qtd:6},
-      {nome:'Cirurgia de safena (a laser)', valor:9000, qtd:3}
-    ]
+    procs: ['Escleroterapia', 'Eco-doppler', 'Microcirurgia ambulatorial'],
+    cirs: ['Lipedema bilateral (pacote)', 'Tratamento de varizes (pacote)', 'Cirurgia de safena']
   },
   plastica: {
-    consultas: { valor: 800, dia: 6, diasMes: 20 },
-    procs: [
-      {nome:'Toxina botulínica', valor:1800, qtd:15},
-      {nome:'Preenchimento facial', valor:2500, qtd:10},
-      {nome:'Bioestimulador', valor:3500, qtd:6}
-    ],
-    cirs: [
-      {nome:'Lipoaspiração HD', valor:22000, qtd:4},
-      {nome:'Mama (próteses)', valor:25000, qtd:3},
-      {nome:'Abdominoplastia', valor:18000, qtd:2},
-      {nome:'Rinoplastia', valor:18000, qtd:2}
-    ]
+    procs: ['Toxina botulínica', 'Preenchimento facial', 'Bioestimulador'],
+    cirs: ['Lipoaspiração', 'Mama (próteses)', 'Abdominoplastia', 'Rinoplastia']
   },
   capilar: {
-    consultas: { valor: 600, dia: 5, diasMes: 18 },
-    procs: [
-      {nome:'Mesoterapia capilar', valor:1200, qtd:12},
-      {nome:'PRP capilar', valor:1500, qtd:8}
-    ],
-    cirs: [
-      {nome:'Transplante capilar (alta densidade)', valor:22000, qtd:6},
-      {nome:'Transplante capilar (área menor)', valor:14000, qtd:4}
-    ]
+    procs: ['Mesoterapia capilar', 'PRP capilar'],
+    cirs: ['Transplante capilar (alta densidade)', 'Transplante capilar (área menor)']
   },
   geral: {
-    consultas: { valor: 600, dia: 6, diasMes: 20 },
-    procs: [
-      {nome:'Procedimento ambulatorial', valor:5000, qtd:8}
-    ],
-    cirs: [
-      {nome:'Cirurgia média', valor:15000, qtd:3},
-      {nome:'Cirurgia grande', valor:30000, qtd:2}
-    ]
+    procs: ['Procedimento ambulatorial 1', 'Procedimento ambulatorial 2'],
+    cirs: ['Cirurgia 1', 'Cirurgia 2']
   }
 };
 
 let state = {
-  hoje: { faturamento: 0, horas: 0, pctConv: 0 },
-  consultas: { valor: 0, dia: 0, diasMes: 20 },
+  hoje: { faturamento: 0, horas: 0 },
+  consultas: { valor: 0, dia: 0, diasMes: 0 },
   procs: [],
   cirs: [],
-  cenario: 'realista',
   tpl: null
 };
 
@@ -659,11 +573,11 @@ function load() {
 }
 
 function addProc(data) {
-  state.procs.push({ id: uid(), nome: data?.nome || '', valor: data?.valor || 0, qtd: data?.qtd || 0 });
+  state.procs.push({ id: uid(), nome: data?.nome || '', valor: 0, qtd: 0 });
   save(); render();
 }
 function addCir(data) {
-  state.cirs.push({ id: uid(), nome: data?.nome || '', valor: data?.valor || 0, qtd: data?.qtd || 0 });
+  state.cirs.push({ id: uid(), nome: data?.nome || '', valor: 0, qtd: 0 });
   save(); render();
 }
 function removeProc(id) { state.procs = state.procs.filter(p => p.id !== id); save(); render(); }
@@ -683,20 +597,12 @@ function updateCirField(id, field, value) {
 }
 
 function applyTemplate(tpl) {
-  const has = state.consultas.valor || state.procs.length || state.cirs.length;
-  if (has && !confirm('Isso vai substituir consultas, procedimentos e cirurgias atuais. Continuar?')) return;
+  const has = state.procs.some(p => p.nome || p.valor || p.qtd) || state.cirs.some(p => p.nome || p.valor || p.qtd);
+  if (has && !confirm('Isso vai substituir os procedimentos e cirurgias atuais (a estrutura virá em branco — você preenche valor e qtd). Continuar?')) return;
   const t = TEMPLATES[tpl];
-  state.consultas = { ...t.consultas };
-  state.procs = t.procs.map(p => ({ id: uid(), ...p }));
-  state.cirs = t.cirs.map(p => ({ id: uid(), ...p }));
+  state.procs = t.procs.map(nome => ({ id: uid(), nome, valor: 0, qtd: 0 }));
+  state.cirs = t.cirs.map(nome => ({ id: uid(), nome, valor: 0, qtd: 0 }));
   state.tpl = tpl;
-  save();
-  render();
-  syncInputs();
-}
-
-function applyScenario(c) {
-  state.cenario = c;
   save();
   render();
 }
@@ -704,9 +610,9 @@ function applyScenario(c) {
 function resetAll() {
   if (!confirm('Limpar TUDO (situação atual + consultas + procedimentos + cirurgias)?')) return;
   state = {
-    hoje: { faturamento: 0, horas: 0, pctConv: 0 },
-    consultas: { valor: 0, dia: 0, diasMes: 20 },
-    procs: [], cirs: [], cenario: 'realista', tpl: null
+    hoje: { faturamento: 0, horas: 0 },
+    consultas: { valor: 0, dia: 0, diasMes: 0 },
+    procs: [], cirs: [], tpl: null
   };
   save();
   render();
@@ -716,58 +622,39 @@ function resetAll() {
 function syncInputs() {
   document.getElementById('hojeFaturamento').value = state.hoje.faturamento ? formatNum(state.hoje.faturamento) : '';
   document.getElementById('hojeHoras').value = state.hoje.horas || '';
-  document.getElementById('hojePctConv').value = state.hoje.pctConv || '';
   document.getElementById('consValor').value = state.consultas.valor || '';
   document.getElementById('consDia').value = state.consultas.dia || '';
   document.getElementById('consDiasMes').value = state.consultas.diasMes || '';
 }
 
 function calc() {
-  const mult = CENARIOS[state.cenario];
-
-  const consQtdMes = (state.consultas.dia || 0) * (state.consultas.diasMes || 0) * mult;
+  // Tudo é multiplicação direta — sem cenário, sem fator
+  const consQtdMes = (state.consultas.dia || 0) * (state.consultas.diasMes || 0);
   const recCons = (state.consultas.valor || 0) * consQtdMes;
 
-  const procsCalc = state.procs.map(p => {
-    const qtdAj = (p.qtd || 0) * mult;
-    return { ...p, qtdAj, receita: (p.valor || 0) * qtdAj };
-  });
+  const procsCalc = state.procs.map(p => ({ ...p, receita: (p.valor || 0) * (p.qtd || 0) }));
   const recProcs = procsCalc.reduce((s,p) => s + p.receita, 0);
-  const qtdProcs = procsCalc.reduce((s,p) => s + p.qtdAj, 0);
+  const qtdProcs = procsCalc.reduce((s,p) => s + (p.qtd || 0), 0);
 
-  const cirsCalc = state.cirs.map(p => {
-    const qtdAj = (p.qtd || 0) * mult;
-    return { ...p, qtdAj, receita: (p.valor || 0) * qtdAj };
-  });
+  const cirsCalc = state.cirs.map(p => ({ ...p, receita: (p.valor || 0) * (p.qtd || 0) }));
   const recCirs = cirsCalc.reduce((s,p) => s + p.receita, 0);
-  const qtdCirs = cirsCalc.reduce((s,p) => s + p.qtdAj, 0);
+  const qtdCirs = cirsCalc.reduce((s,p) => s + (p.qtd || 0), 0);
 
   const totalMes = recCons + recProcs + recCirs;
   const totalAno = totalMes * 12;
   const totalQtd = consQtdMes + qtdProcs + qtdCirs;
-  const totalQtdPaga = consQtdMes + qtdProcs + qtdCirs;
-  const ticket = totalQtdPaga > 0 ? totalMes / totalQtdPaga : 0;
+  const ticket = totalQtd > 0 ? totalMes / totalQtd : 0;
 
-  // hoje vs cpp
+  // Hoje — só matemática direta: faturamento ÷ (horas/sem × 4.33)
   const fatHoje = state.hoje.faturamento || 0;
   const horasHoje = state.hoje.horas || 0;
-  const reaisHoraHoje = horasHoje > 0 ? fatHoje / (horasHoje * 4.33) : 0;
-
-  // Estimativa de horas como CPP (premium = menos horas, mais valor)
-  // Consultas: 30min cada (premium = 40min mas vamos usar 30 de média de bloqueio)
-  // Procedimentos: ~45min cada
-  // Cirurgias: ~3h cada (operação + acompanhamento)
-  // Convertido em horas/semana
-  const horasCPPmes = (consQtdMes * 0.5) + (qtdProcs * 0.75) + (qtdCirs * 3);
-  const horasCPPsemana = horasCPPmes / 4.33;
-  const horasCPPtrabalhada = horasCPPsemana * 1.6; // adiciona admin/casos/conteudo
-  const reaisHoraCPP = horasCPPtrabalhada > 0 ? totalMes / (horasCPPtrabalhada * 4.33) : 0;
+  const horasMesHoje = horasHoje * 4.33;
+  const reaisHoraHoje = horasMesHoje > 0 ? fatHoje / horasMesHoje : 0;
 
   return {
     consQtdMes, recCons, recProcs, recCirs, totalMes, totalAno, totalQtd, ticket,
     procsCalc, cirsCalc,
     fatHoje, horasHoje, reaisHoraHoje,
-    horasCPPtrabalhada, reaisHoraCPP,
     diffMes: totalMes - fatHoje,
     diffAno: (totalMes - fatHoje) * 12
   };
@@ -777,7 +664,7 @@ function makeRow(p, ns) {
   const tr = document.createElement('tr');
   tr.dataset.id = p.id;
   tr.innerHTML = `
-    <td><input class="cell-input" placeholder="${ns === 'proc' ? 'Ex.: Infiltração' : 'Ex.: Quadril unilateral (pacote)'}" value="${escapeHtml(p.nome)}" data-f="nome"></td>
+    <td><input class="cell-input" placeholder="${ns === 'proc' ? 'Nome do procedimento' : 'Nome da cirurgia'}" value="${escapeHtml(p.nome)}" data-f="nome"></td>
     <td><input class="cell-input numeric" inputmode="decimal" placeholder="0" value="${p.valor || ''}" data-f="valor"></td>
     <td><input class="cell-input numeric" inputmode="numeric" placeholder="0" value="${p.qtd || ''}" data-f="qtd"></td>
     <td class="cell-receita" data-receita></td>
@@ -813,7 +700,7 @@ function render() {
   tbProc.innerHTML = '';
   if (state.procs.length === 0) {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td colspan="5" class="empty">Adicione procedimentos ambulatoriais ou puxe um modelo.</td>`;
+    tr.innerHTML = `<td colspan="5" class="empty">Adicione procedimentos ambulatoriais ou puxe uma estrutura por especialidade acima.</td>`;
     tbProc.appendChild(tr);
   } else {
     state.procs.forEach((p,i) => {
@@ -827,7 +714,7 @@ function render() {
   tbCir.innerHTML = '';
   if (state.cirs.length === 0) {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td colspan="5" class="empty">Adicione suas cirurgias com valor de pacote completo.</td>`;
+    tr.innerHTML = `<td colspan="5" class="empty">Adicione suas cirurgias ou puxe uma estrutura por especialidade acima.</td>`;
     tbCir.appendChild(tr);
   } else {
     state.cirs.forEach((p,i) => {
@@ -839,13 +726,11 @@ function render() {
 
   // KPIs
   document.getElementById('kpiMes').textContent = formatBRL(r.totalMes);
-  document.getElementById('kpiMesSub').textContent = `cenário ${state.cenario}`;
   document.getElementById('kpiAno').textContent = formatBRL(r.totalAno);
   document.getElementById('kpiTicket').textContent = formatBRL(r.ticket);
-  document.getElementById('kpiTicketSub').textContent = r.ticket > 0 ? `por atendimento (consulta/proc/cir)` : 'preencha os blocos';
+  document.getElementById('kpiTicketSub').textContent = r.totalQtd > 0 ? `${formatNum(r.totalQtd)} atendimentos / mês` : 'preencha os blocos';
 
-  // Cenários e templates
-  document.querySelectorAll('.scen').forEach(b => b.classList.toggle('active', b.dataset.scen === state.cenario));
+  // Templates highlight
   document.querySelectorAll('.tpl').forEach(b => b.classList.toggle('active', b.dataset.tpl === state.tpl));
 
   // Distribuição
@@ -882,7 +767,7 @@ function render() {
     const dMesSub = document.getElementById('deltaMesSub');
     dMes.textContent = (r.diffMes >= 0 ? '+ ' : '- ') + formatBRL(Math.abs(r.diffMes));
     dMes.classList.toggle('neg', r.diffMes < 0);
-    dMesSub.textContent = r.diffMes >= 0 ? 'a mais por mês' : 'a menos (revisar valores)';
+    dMesSub.textContent = r.diffMes >= 0 ? 'CPP − hoje' : 'CPP menor que hoje';
 
     const dAno = document.getElementById('deltaAno');
     dAno.textContent = (r.diffAno >= 0 ? '+ ' : '- ') + formatBRL(Math.abs(r.diffAno));
@@ -890,11 +775,10 @@ function render() {
 
     const dHora = document.getElementById('deltaHora');
     const dHoraSub = document.getElementById('deltaHoraSub');
-    if (r.reaisHoraHoje > 0 && r.reaisHoraCPP > 0) {
-      dHora.textContent = formatBRL(r.reaisHoraCPP) + '/h';
+    if (r.reaisHoraHoje > 0) {
+      dHora.textContent = formatBRL(r.reaisHoraHoje) + '/h';
       dHora.classList.remove('neg');
-      const diff = r.reaisHoraCPP - r.reaisHoraHoje;
-      dHoraSub.textContent = `vs ${formatBRL(r.reaisHoraHoje)}/h hoje`;
+      dHoraSub.textContent = `${formatNum(r.horasHoje)} h/sem × 4,33`;
     } else {
       dHora.textContent = '—';
       dHoraSub.textContent = 'preencha horas/semana';
@@ -919,71 +803,17 @@ function render() {
   } else {
     proj.style.display = 'none';
   }
-
-  // Insight consultivo
-  const ins = document.getElementById('insightBlock');
-  const insT = document.getElementById('insightText');
-  if (r.totalMes > 0) {
-    ins.style.display = '';
-    const ps = [];
-
-    // Insight 1 — diferença vs hoje
-    if (r.fatHoje > 0) {
-      if (r.diffMes > 0) {
-        ps.push(`<p>Operando como CPP, sua receita seria <strong>${formatBRL(r.totalMes)}/mês</strong>. Hoje você fatura <strong>${formatBRL(r.fatHoje)}/mês</strong>. <em>Diferença: ${formatBRL(r.diffMes)} por mês — ou ${formatBRL(r.diffAno)} por ano.</em></p>`);
-        if (r.diffAno >= 500000) {
-          ps.push(`<p>Em 5 anos isso é <strong>${formatBRLshort(r.diffAno * 5)}</strong> que você está deixando na mesa por estar onde está. Não é um número pra emocionar — é um número pra <em>decidir</em>.</p>`);
-        }
-      } else {
-        ps.push(`<p>Sua projeção CPP (${formatBRL(r.totalMes)}/mês) ainda está abaixo do que você fatura hoje (${formatBRL(r.fatHoje)}/mês). <em>Provável causa:</em> ticket subdimensionado nos blocos acima. Revisita os valores — premium tipicamente cobra 5-10× o convênio na consulta e 3-5× na cirurgia.</p>`);
-      }
-    } else {
-      ps.push(`<p>Sua projeção CPP é <strong>${formatBRL(r.totalMes)}/mês</strong> — ou <strong>${formatBRL(r.totalAno)}/ano</strong>. Pra comparar com sua realidade, preencha o faturamento atual no topo da página.</p>`);
-    }
-
-    // Insight 2 — concentração de receita
-    const cirPct = r.totalMes > 0 ? (r.recCirs / r.totalMes) * 100 : 0;
-    const consPct = r.totalMes > 0 ? (r.recCons / r.totalMes) * 100 : 0;
-    if (cirPct > 70) {
-      ps.push(`<p><strong>${cirPct.toFixed(0)}% da sua receita CPP vem de cirurgias.</strong> Operação concentrada — bom ticket, mas <em>frágil em mês de baixa</em>. Procedimentos ambulatoriais recorrentes estabilizam fluxo (dia 26 do plano: próxima unidade).</p>`);
-    } else if (consPct > 45) {
-      ps.push(`<p><strong>${consPct.toFixed(0)}% vem só de consulta.</strong> Você está sustentando a operação no volume — premium sustenta no <em>fechamento</em>. Próximo passo: aumentar a conversão consulta → cirurgia (dia 22 do plano).</p>`);
-    }
-
-    // Insight 3 — horas trabalhadas
-    if (r.reaisHoraCPP > 0 && r.reaisHoraHoje > 0) {
-      const ratio = r.reaisHoraCPP / r.reaisHoraHoje;
-      if (ratio >= 2) {
-        ps.push(`<p>Seu R$/hora como CPP seria <strong>${formatBRL(r.reaisHoraCPP)}/h</strong> contra <strong>${formatBRL(r.reaisHoraHoje)}/h hoje</strong>. <em>${ratio.toFixed(1)}× mais valor por hora trabalhada.</em> O caro não é trabalhar — é trabalhar barato.</p>`);
-      } else if (ratio < 1) {
-        ps.push(`<p>R$/hora CPP saindo abaixo do atual. Provável: você está projetando volume alto demais. Premium é menos pacientes, mais tempo, mais valor por encontro. Reduz volume no cenário e revisa.</p>`);
-      }
-    }
-
-    // Insight 4 — chamada de ação
-    if (r.totalMes >= 100000) {
-      ps.push(`<p><em>Próximo passo:</em> esse número não acontece por acidente. Os 30 dias do <a href="https://pofazze.github.io/plano-independencia-particular/" target="_blank">Plano de Independência Particular</a> são o caminho ordenado pra chegar nele.</p>`);
-    } else {
-      ps.push(`<p><em>Próximo passo:</em> revise se os valores acima são os que você cobraria como CPP — não os que cobra hoje. Premium não compete por preço; cria categoria própria.</p>`);
-    }
-
-    insT.innerHTML = ps.join('');
-  } else {
-    ins.style.display = 'none';
-  }
 }
 
 // LISTENERS
 document.getElementById('hojeFaturamento').addEventListener('input', e => { state.hoje.faturamento = parseBR(e.target.value); save(); render(); });
 document.getElementById('hojeHoras').addEventListener('input', e => { state.hoje.horas = parseBR(e.target.value); save(); render(); });
-document.getElementById('hojePctConv').addEventListener('input', e => { state.hoje.pctConv = parseBR(e.target.value); save(); render(); });
 
 document.getElementById('consValor').addEventListener('input', e => { state.consultas.valor = parseBR(e.target.value); save(); render(); });
 document.getElementById('consDia').addEventListener('input', e => { state.consultas.dia = parseBR(e.target.value); save(); render(); });
 document.getElementById('consDiasMes').addEventListener('input', e => { state.consultas.diasMes = parseBR(e.target.value); save(); render(); });
 
 document.querySelectorAll('.tpl').forEach(b => b.addEventListener('click', () => applyTemplate(b.dataset.tpl)));
-document.querySelectorAll('.scen').forEach(b => b.addEventListener('click', () => applyScenario(b.dataset.scen)));
 
 // INIT
 load();
