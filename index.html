@@ -254,7 +254,7 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
     <span class="eyebrow">Simulador de Receita CPP</span>
     <h1>Quanto você ganharia<br>como <em>Cirurgião Particular Premium</em></h1>
     <p class="sub">Simule sua receita em 3 blocos — consultas, procedimentos e cirurgias. Compare com sua situação atual. Veja a diferença em 1, 3 e 5 anos.</p>
-    <div class="hero-note"><b>Você preenche todos os valores.</b> &nbsp;Nenhum número é sugerido pelo simulador.</div>
+    <div class="hero-note"><b>Só preencha valor e quantidade.</b> &nbsp;Nada é sugerido. Linhas em branco somam zero.</div>
   </div>
 </section>
 
@@ -283,23 +283,6 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
         </div>
         <div class="field-hint">Inclui plantões, consultório, cirurgias, deslocamento, administração.</div>
       </div>
-    </div>
-  </div>
-
-  <!-- TEMPLATES -->
-  <div class="tpl-block">
-    <div class="tpl-head">
-      <div>
-        <h3>Atalho · estrutura por especialidade</h3>
-        <p>Adiciona apenas a lista de itens (sem valores). Você preenche valor e quantidade.</p>
-      </div>
-    </div>
-    <div class="tpl-list">
-      <button class="tpl" data-tpl="ortopedia">Ortopedia</button>
-      <button class="tpl" data-tpl="vascular">Vascular</button>
-      <button class="tpl" data-tpl="plastica">Plástica</button>
-      <button class="tpl" data-tpl="capilar">Transplante Capilar</button>
-      <button class="tpl" data-tpl="geral">Estrutura Genérica</button>
     </div>
   </div>
 
@@ -368,13 +351,11 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
                 <th class="col-valor right">Valor unitário</th>
                 <th class="col-qtd right">Qtd / mês</th>
                 <th class="col-receita right">Receita / mês</th>
-                <th class="col-action"></th>
               </tr>
             </thead>
             <tbody id="tbodyProc"></tbody>
           </table>
         </div>
-        <button class="btn-add" onclick="addProc()">+ Adicionar procedimento</button>
       </div>
     </div>
 
@@ -399,20 +380,18 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
                 <th class="col-valor right">Valor unitário</th>
                 <th class="col-qtd right">Qtd / mês</th>
                 <th class="col-receita right">Receita / mês</th>
-                <th class="col-action"></th>
               </tr>
             </thead>
             <tbody id="tbodyCir"></tbody>
           </table>
         </div>
-        <button class="btn-add" onclick="addCir()">+ Adicionar cirurgia</button>
       </div>
     </div>
 
   </div>
 
   <!-- DASHBOARD CPP -->
-  <div class="s-eyebrow">Etapa 5 · Resultado</div>
+  <div class="s-eyebrow">Resultado</div>
   <h2 class="s-title">Sua <em>receita</em> como CPP</h2>
   <p class="s-lead">Soma exata dos 3 blocos com os valores e quantidades que você preencheu. Sem multiplicador, sem cenário, sem ajuste.</p>
 
@@ -503,38 +482,14 @@ footer{padding:48px 0 64px;border-top:1px solid var(--line);text-align:center}
 </footer>
 
 <script>
-const STATE_KEY = 'cpp_simulador_v3';
-
-// Templates SEM valores — apenas estrutura/nomes pra estruturar
-const TEMPLATES = {
-  ortopedia: {
-    procs: ['Infiltração', 'Bloqueio anestésico', 'Aplicação de ácido hialurônico'],
-    cirs: ['Quadril unilateral (pacote)', 'Joelho unilateral (pacote)', 'Artroscopia']
-  },
-  vascular: {
-    procs: ['Escleroterapia', 'Eco-doppler', 'Microcirurgia ambulatorial'],
-    cirs: ['Lipedema bilateral (pacote)', 'Tratamento de varizes (pacote)', 'Cirurgia de safena']
-  },
-  plastica: {
-    procs: ['Toxina botulínica', 'Preenchimento facial', 'Bioestimulador'],
-    cirs: ['Lipoaspiração', 'Mama (próteses)', 'Abdominoplastia', 'Rinoplastia']
-  },
-  capilar: {
-    procs: ['Mesoterapia capilar', 'PRP capilar'],
-    cirs: ['Transplante capilar (alta densidade)', 'Transplante capilar (área menor)']
-  },
-  geral: {
-    procs: ['Procedimento ambulatorial 1', 'Procedimento ambulatorial 2'],
-    cirs: ['Cirurgia 1', 'Cirurgia 2']
-  }
-};
+const STATE_KEY = 'cpp_simulador_v4';
+const ROWS_DEFAULT = 8;
 
 let state = {
   hoje: { faturamento: 0, horas: 0 },
   consultas: { valor: 0, dia: 0, diasMes: 0 },
   procs: [],
-  cirs: [],
-  tpl: null
+  cirs: []
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
@@ -572,16 +527,14 @@ function load() {
   } catch(e){}
 }
 
-function addProc(data) {
-  state.procs.push({ id: uid(), nome: data?.nome || '', valor: 0, qtd: 0 });
-  save(); render();
+function ensureRows() {
+  while (state.procs.length < ROWS_DEFAULT) {
+    state.procs.push({ id: uid(), nome: '', valor: 0, qtd: 0 });
+  }
+  while (state.cirs.length < ROWS_DEFAULT) {
+    state.cirs.push({ id: uid(), nome: '', valor: 0, qtd: 0 });
+  }
 }
-function addCir(data) {
-  state.cirs.push({ id: uid(), nome: data?.nome || '', valor: 0, qtd: 0 });
-  save(); render();
-}
-function removeProc(id) { state.procs = state.procs.filter(p => p.id !== id); save(); render(); }
-function removeCir(id) { state.cirs = state.cirs.filter(p => p.id !== id); save(); render(); }
 
 function updateProcField(id, field, value) {
   const p = state.procs.find(x => x.id === id);
@@ -596,24 +549,14 @@ function updateCirField(id, field, value) {
   save(); render();
 }
 
-function applyTemplate(tpl) {
-  const has = state.procs.some(p => p.nome || p.valor || p.qtd) || state.cirs.some(p => p.nome || p.valor || p.qtd);
-  if (has && !confirm('Isso vai substituir os procedimentos e cirurgias atuais (a estrutura virá em branco — você preenche valor e qtd). Continuar?')) return;
-  const t = TEMPLATES[tpl];
-  state.procs = t.procs.map(nome => ({ id: uid(), nome, valor: 0, qtd: 0 }));
-  state.cirs = t.cirs.map(nome => ({ id: uid(), nome, valor: 0, qtd: 0 }));
-  state.tpl = tpl;
-  save();
-  render();
-}
-
 function resetAll() {
   if (!confirm('Limpar TUDO (situação atual + consultas + procedimentos + cirurgias)?')) return;
   state = {
     hoje: { faturamento: 0, horas: 0 },
     consultas: { valor: 0, dia: 0, diasMes: 0 },
-    procs: [], cirs: [], tpl: null
+    procs: [], cirs: []
   };
+  ensureRows();
   save();
   render();
   syncInputs();
@@ -668,14 +611,11 @@ function makeRow(p, ns) {
     <td><input class="cell-input numeric" inputmode="decimal" placeholder="0" value="${p.valor || ''}" data-f="valor"></td>
     <td><input class="cell-input numeric" inputmode="numeric" placeholder="0" value="${p.qtd || ''}" data-f="qtd"></td>
     <td class="cell-receita" data-receita></td>
-    <td class="cell-action"><button class="btn-x" title="Remover">×</button></td>
   `;
   const updater = ns === 'proc' ? updateProcField : updateCirField;
-  const remover = ns === 'proc' ? removeProc : removeCir;
   tr.querySelectorAll('[data-f]').forEach(el => {
     el.addEventListener('input', e => updater(p.id, el.dataset.f, e.target.value));
   });
-  tr.querySelector('.btn-x').addEventListener('click', () => remover(p.id));
   return tr;
 }
 
@@ -698,40 +638,25 @@ function render() {
   // Tabelas Proc + Cir
   const tbProc = document.getElementById('tbodyProc');
   tbProc.innerHTML = '';
-  if (state.procs.length === 0) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td colspan="5" class="empty">Adicione procedimentos ambulatoriais ou puxe uma estrutura por especialidade acima.</td>`;
+  state.procs.forEach((p,i) => {
+    const tr = makeRow(p, 'proc');
+    tr.querySelector('[data-receita]').textContent = formatBRL(r.procsCalc[i].receita);
     tbProc.appendChild(tr);
-  } else {
-    state.procs.forEach((p,i) => {
-      const tr = makeRow(p, 'proc');
-      tr.querySelector('[data-receita]').textContent = formatBRL(r.procsCalc[i].receita);
-      tbProc.appendChild(tr);
-    });
-  }
+  });
 
   const tbCir = document.getElementById('tbodyCir');
   tbCir.innerHTML = '';
-  if (state.cirs.length === 0) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td colspan="5" class="empty">Adicione suas cirurgias ou puxe uma estrutura por especialidade acima.</td>`;
+  state.cirs.forEach((p,i) => {
+    const tr = makeRow(p, 'cir');
+    tr.querySelector('[data-receita]').textContent = formatBRL(r.cirsCalc[i].receita);
     tbCir.appendChild(tr);
-  } else {
-    state.cirs.forEach((p,i) => {
-      const tr = makeRow(p, 'cir');
-      tr.querySelector('[data-receita]').textContent = formatBRL(r.cirsCalc[i].receita);
-      tbCir.appendChild(tr);
-    });
-  }
+  });
 
   // KPIs
   document.getElementById('kpiMes').textContent = formatBRL(r.totalMes);
   document.getElementById('kpiAno').textContent = formatBRL(r.totalAno);
   document.getElementById('kpiTicket').textContent = formatBRL(r.ticket);
   document.getElementById('kpiTicketSub').textContent = r.totalQtd > 0 ? `${formatNum(r.totalQtd)} atendimentos / mês` : 'preencha os blocos';
-
-  // Templates highlight
-  document.querySelectorAll('.tpl').forEach(b => b.classList.toggle('active', b.dataset.tpl === state.tpl));
 
   // Distribuição
   const dist = document.getElementById('distBlock');
@@ -813,10 +738,9 @@ document.getElementById('consValor').addEventListener('input', e => { state.cons
 document.getElementById('consDia').addEventListener('input', e => { state.consultas.dia = parseBR(e.target.value); save(); render(); });
 document.getElementById('consDiasMes').addEventListener('input', e => { state.consultas.diasMes = parseBR(e.target.value); save(); render(); });
 
-document.querySelectorAll('.tpl').forEach(b => b.addEventListener('click', () => applyTemplate(b.dataset.tpl)));
-
 // INIT
 load();
+ensureRows();
 syncInputs();
 render();
 </script>
